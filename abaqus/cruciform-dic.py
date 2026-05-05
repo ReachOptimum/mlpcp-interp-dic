@@ -54,7 +54,7 @@ def timer_tick(start_time):
 # Define path for data
 current_dir = os.getcwd()
 DIC_DIR = os.path.join(current_dir, 'data', 'dic')
-SAMPLES_DIR = os.path.join(current_dir, 'data', 'dic', 'samples')
+SAMPLES_DIR = os.path.join(DIC_DIR, 'samples')
 TRAIN_DIR = os.path.join(SAMPLES_DIR, "train")
 TEST_DIR  = os.path.join(SAMPLES_DIR, "test")
 
@@ -62,6 +62,10 @@ make_dir(DIC_DIR)
 make_dir(SAMPLES_DIR)
 make_dir(TRAIN_DIR)
 make_dir(TEST_DIR)
+
+# copy previous y_train and y_test files from data/cleaned to DIC_DIR
+y_train_file = os.path.join(DIC_DIR, 'y_train.csv')
+y_test_file = os.path.join(DIC_DIR, 'y_test.csv')
 
 overwrite=True
 
@@ -303,8 +307,6 @@ nodes_x = [node.label for node in node_set_x.nodes]
 nodes_y = [node.label for node in node_set_y.nodes]
 
 # sample extraction from csv files
-y_train_file = os.path.join(DIC_DIR, 'y_train.csv')
-y_test_file = os.path.join(DIC_DIR, 'y_test.csv')
 y_train_samples = np.genfromtxt(y_train_file, delimiter=',', skip_header=1)
 y_test_samples = np.genfromtxt(y_test_file, delimiter=',', skip_header=1)
 train = np.atleast_2d(y_train_samples)
