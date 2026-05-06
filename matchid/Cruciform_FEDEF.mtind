@@ -1,0 +1,108 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% s_Project Type
+%%%%%% 2D or Stereo 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<application>=<Stereo>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% s_Reference Image
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<Reference$image>=<0;Static_0000_0.tiff>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% FEA Mesh
+%%%%%% Mesh$file: file containing element-nodal correspondences and nodal locations in the reference configuration
+%%%%%% Mesh$unit: Unit of the FEA model. Options:  mm / m / inch 
+%%%%%% Mesh$position: Position of mesh w.r.t. camera 0. Order: Tx, Ty, Tz, Theta, Phi, Psi 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<Mesh$file>=<cruciform.mesh>
+<Mesh$unit>=<mm>
+<Mesh$position>=<-44.0304884409636;-12.0411502270728;351.276374781098;0;0;0>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% s_Nodal files containing nodal locations in the deformed configuration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<Nodal$file>=<cruciform_01.csv;cruciform_02.csv;cruciform_03.csv;cruciform_04.csv;cruciform_05.csv;cruciform_06.csv;cruciform_07.csv;cruciform_08.csv;cruciform_09.csv;cruciform_10.csv;cruciform_11.csv;cruciform_12.csv;cruciform_13.csv;cruciform_14.csv;cruciform_15.csv;cruciform_16.csv;cruciform_17.csv;cruciform_18.csv;cruciform_19.csv;cruciform_20.csv>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% s_Calibration File(s)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<Camera$1$calibrationfile>=<Calibration_data.caldat>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Camera Properties
+%%%%%% Camera$x$reference: camera ID
+%%%%%% Camera$x$sensor: Width[pix], Heigth[pix], PixelSize[um], type [WL/IR]
+%%%%%% Camera$x$lens: f[mm], focus_dist[mm], f_number
+%%%%%% Camera$x$intrisics: Standard or Polynomial
+%%%%%%      - Camera$x$intrinsic: Fx, Fy, Fs, K1, K2, K3, P1, P2, Cx, Cy 
+%%%%%%      - Camera$x$Polynomial: Fx, Fy, Fs, Cx, Cy, Order Of Polynomial, P_i 
+%%%%%% Camera$x$extrinsic: Tx, Ty, Tz, Theta, Phi, Psi
+%%%%%% Camera$x$noise: None, Uniform or Gray level based
+%%%%%%      - None: <0> 
+%%%%%%      - Uniform: <1; mean; sigma> 
+%%%%%%      - Gray: <2; relative_imagePath_1; relative_imagePath_2; ...> 
+%%%%%%      - File: <3; relative_Path_1; relative_Path_2; ...> 
+%%%%%% Camera$x$blur: None, Gauss, File
+%%%%%%      - None: <0> 
+%%%%%%      - Gaus: <1; kernel> 
+%%%%%%      - File: <2; relative_Path> 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<Camera$0$intrinsic>=<15342.7044863121;15342.1317737737;2.59514889823986;-0.0395283743760222;-1.23264818091351;43.6427888449762;-0.00123147902618558;0.00196743446756828;2101.11825619839;1440.35910955109;0;0>
+<Camera$0$noise>=<0>
+<Camera$0$blur>=<0>
+
+<Camera$1$intrinsic>=<15356.0879479272;15354.5240478527;1.50558250536191;-0.0318684772047428;-1.65847227959553;61.0432947528772;-0.00101956578334339;0.000347382363908734;2020.23128932576;1434.99644374213;0;0>
+<Camera$1$extrinsic>=<181.917135362114;0.0772443151984889;35.8935137616066;0.196805052072032;-20.7366792696107;0.191403310130137>
+<Camera$1$noise>=<0>
+<Camera$1$blur>=<0>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Output settings 
+%%%%%% Base$filename: Save Filename 
+%%%%%% Output$folder: Output folder for deformed image storage 
+%%%%%% Save$Mapping$File: Save a file to map every pixel of camera 0 to the meshes elements.
+%%%%%% Save$Nodal$Mapping$File: Save a file to map every node to a pixel of camera 0 in the reference state.
+%%%%%% Save$Masking$File: Save the ROI mask for camera 0. 
+%%%%%% Masking$Safety$Margin: Margin in pixels that the masking file will keep from the actual mesh edge. Usefull to avoid edge effects. 
+%%%%%% Save$As$...: Save the numerical images in different formats. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<Base$filename>=<Static_0000_0_Numerical>
+<Output$folder>=<C:\ABSOLUTE\PATH\TO\test-OR-train\_base>
+<Save$Mapping$File>=<False>
+<Save$Element$Mapping$File>=<False>
+<Save$Nodal$Mapping$File>=<False>
+<Save$Masking$File>=<True>
+<Masking$Safety$Margin>=<1>
+<Save$As$def>=<False>
+<Save$As$Synthetic>=<True>
+<Save$As$tif>=<False>
+<Save$As$csv>=<False>
+<Save$As$dat>=<False;5>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Grey levels handling
+%%%%%% Interpolation: Bicubic = 0, Bicubic spline = 1
+%%%%%% Background$color: Value in between 0 and 255 for pixels with no covering element
+%%%%%% KeepOriginalBack$Reference$camera0: Only for camera 0 its reference state, keep the original image rather then the background color.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<Interpolation>=<1>
+<Background$color>=<150>
+<KeepOriginalBack$Reference$camera0>=<False>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Thermal Settings
+%%%%%% Background$temperature: background temperature in C
+%%%%%% Object$temperature: object temperature in C
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<Background$temperature>=<20>
+<Object$temperature>=<30>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Render Settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<Render$number$processors>=<14>
+<Render$light$changes>=<False>
+<Render$pixel$integration>=<False>
+<Render$depth$of$field>=<False>
+

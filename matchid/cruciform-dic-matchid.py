@@ -16,8 +16,7 @@ caldat = os.path.join(current_dir, "Calibration_data.caldat")
 tiff_0 = os.path.join(current_dir, "Static_0000_0.tiff") # master camera
 tiff_1 = os.path.join(current_dir, "Static_0000_1.tiff")
 
-# logfile = os.path.join(current_dir, "dic_log.txt")
-logfile = r"Z:\dic_log.txt"  # hardcoded path
+logfile = os.path.join(current_dir, "dic-logs.log")
 
 # ---- SETUP LOGGING ----
 logging.basicConfig(
