@@ -40,7 +40,15 @@ The methodology of this work is separated into the following steps.
 
 ### 1. New Abaqus simulations according to the previous DOE
 
-Performed with with [cruciform-dic.py](/abaqus/cruciform-dic.py) script.
+:pushpin: As Abaqus is a Windows-only software, the script inside [abaqus](/abaqus/) folder is ment to be run on a Windows environment.
+
+:warning: Before running the script, you must copy both [y_train.csv](/data/cleaned/y_train.csv) and [y_test.csv](/data/cleaned/y_test.csv) parameter files generated in the previous numerical study to abaqus [data](/abaqus/data/) folder. This allows abaqus to perform exact the same numerical simulations, but this time with a different output for later use in MatchID.
+
+Now, just run [cruciform-dic.py](/abaqus/cruciform-dic.py) script within [abaqus](/abaqus/) folder
+
+```
+abaqus cae noGUI=cruciform-dic.py
+```
 
 ### 2. DIC-levelling process with MatchID
 
@@ -53,7 +61,7 @@ Performed with with [cruciform-dic.py](/abaqus/cruciform-dic.py) script.
 * [Cruciform_DIC.m3inp](/matchid/Cruciform_DIC.m3inp), lines 13, 16, 64-84, 268
 * [Cruciform_FEDEF.mtind](/matchid/Cruciform_FEDEF.mtind), line 71
 
-#### 2.3. Copy the generated Abaqus [samples](/abaqus/data/dic/samples) to their respective matchid [train](/matchid/train/) and [test](/matchid/test/) folders.
+#### 2.3. Copy the generated Abaqus [train](/abaqus/data/train/) and [test](/abaqus/data/test/) samples to their respective matchid [train](/matchid/train/) and [test](/matchid/test/) folders.
 
 :warning: Note that each sample is associated to 1 folder.
 

@@ -1,13 +1,11 @@
 # -*- coding: mbcs -*-
 # Do not delete the following import lines
-#abaqus cae noGUI=Cruciform.py
+#abaqus cae noGUI=cruciform-dic.py
 #This is the 3D Cruciform NM100 Mesh
-os.system('Abaqus job=Job-1.inp user=UMMDp_FLC.f interactive ask_delete=OFF')
 from abaqus import *
 from abaqusConstants import *
-# from odbAccess import *
-from pyD import new
 from array import array
+from subprocess import call
 
 import __main__
 import glob
@@ -51,23 +49,37 @@ def timer_tick(start_time):
     # Print total elapsed time in "minutes:seconds" format
     print("Finished in {}:{:02d} minutes.".format(elapsed_minutes, elapsed_seconds))
 
+def run_job():
+    print("Running the job ...")
+    try:
+        retcode = call("abaqus job=Job-1 user=UMMDp_FLC.f interactive ask_delete=OFF", shell=True)
+        if retcode < 0:
+            print >>sys.stderr, "Job was terminated by signal", -retcode
+        else:
+            print >>sys.stderr, "Job returned", retcode
+    except OSError as e:
+        print >>sys.stderr, "Job execution failed:", e
+
 # Define path for data
 current_dir = os.getcwd()
-DIC_DIR = os.path.join(current_dir, 'data', 'dic')
-SAMPLES_DIR = os.path.join(DIC_DIR, 'samples')
-TRAIN_DIR = os.path.join(SAMPLES_DIR, "train")
-TEST_DIR  = os.path.join(SAMPLES_DIR, "test")
+DATA = os.path.join(current_dir, 'data')
+TRAIN_DIR = os.path.join(DATA, "train")
+TEST_DIR  = os.path.join(DATA, "test")
 
-make_dir(DIC_DIR)
-make_dir(SAMPLES_DIR)
+make_dir(DATA)
 make_dir(TRAIN_DIR)
 make_dir(TEST_DIR)
 
-# copy previous y_train and y_test files from data/cleaned to DIC_DIR
-y_train_file = os.path.join(DIC_DIR, 'y_train.csv')
-y_test_file = os.path.join(DIC_DIR, 'y_test.csv')
+# copy previous y_train and y_test files from data/cleaned to DATA
+y_train_file = os.path.join(DATA, 'y_train.csv')
+y_test_file = os.path.join(DATA, 'y_test.csv')
+
+# Define mesh file path
+mesh_file = os.path.join(DATA, "cruciform.mesh")
 
 overwrite=True
+
+run_job()
 
 #  ----------------------------------------------------------------------------------------------------------------  #
 # -----------------------------------  Define the Extrusion Part and Partition  -----------------------------------  #
@@ -299,7 +311,7 @@ mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
 # --------------------------------------  Define the Design of Experiments  ---------------------------------------  #
 #  ----------------------------------------------------------------------------------------------------------------  #
 
-os.system('Abaqus job=Job-1.inp user=UMMDp_FLC.f interactive ask_delete=OFF')
+run_job()
 
 node_set_x = mdb.models['Model-1'].rootAssembly.sets['Set-1']
 node_set_y = mdb.models['Model-1'].rootAssembly.sets['Set-2']
@@ -321,9 +333,6 @@ n_train = train.shape[0]   # number of training samples
 # Start the timer
 print("Creating mesh file")
 start_time = time.time()
-
-# Define mesh path
-mesh_file = os.path.join(DIC_DIR, "cruciform.mesh")
 
 model = mdb.models['Model-1']
 inst = model.rootAssembly.instances['Part-1-1']
@@ -422,16 +431,13 @@ for index, row in enumerate(stacked_samples):
     mdb.jobs['Job-1'].submit(consistencyChecking=OFF)                                                                                                                                                             #Submit the Job
     mdb.jobs['Job-1'].waitForCompletion()
 
-    os.system('Abaqus job=Job-1.inp user=UMMDp_FLC.f interactive ask_delete=OFF')
+    run_job()
 
     odb_Path = 'Job-1.odb'
     cruci_ODB = session.openOdb(name=odb_Path)                                                                                                                                                                            #Open ODB File
 
     frames = len(cruci_ODB.steps['Step-1'].frames)                                                                                                                                                                #Number of Frames
-    # nodes = len(cruci_ODB.steps['Step-1'].frames[0].fieldOutputs['S'].values[0].instance.nodes)                                                                #Number of Nodes
-    # elements = len(cruci_ODB.steps['Step-1'].frames[0].fieldOutputs['S'].values[0].instance.elements)                                                  #Number of Elements
-    # no_of_field_output_ut_values = len(cruci_ODB.steps['Step-1'].frames[0].fieldOutputs['S'].values)                                                  #Field Output Values
-
+    
     timer_tick(start_time)
 
     #  ----------------------------------------------------------------------------------------------------------------  #
