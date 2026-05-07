@@ -27,7 +27,7 @@ def generate_comparison_plots_2x3(grid, method, test_method):
     """
     Generates a 2x3 plot ONLY for y_pred (black dots) and saves it to a PDF.
     """
-    pred_params_path = os.path.join(DATA, f"y_pred_{grid}_{method}_{test_method}.csv")
+    pred_params_path = os.path.join(DATA, f"y_pred_dic_exy_x2_{grid}_{method}_{test_method}.csv")
     y_test_path = Y_TEST
 
     try:
@@ -126,8 +126,8 @@ def generate_comparison_plots_2x3(grid, method, test_method):
             ax.set_xlabel(f"{config['y_labels'].get(column, column)} test")
             ax.set_ylabel(f"{config['y_labels'].get(column, column)} predicted")
 
-        plt.savefig(os.path.join(PLOT, f"y_pred_plot_2x3_{grid}_{method}_{test_method}.pdf"))
-        plt.savefig(os.path.join(PLOT, f"y_pred_plot_2x3_{grid}_{method}_{test_method}.svg"), format="svg")
+        plt.savefig(os.path.join(PLOT, f"y_pred_dic_exy_x2_plot_2x3_{grid}_{method}_{test_method}.pdf"))
+        plt.savefig(os.path.join(PLOT, f"y_pred_dic_exy_x2_plot_2x3_{grid}_{method}_{test_method}.svg"), format="svg")
         plt.close()
 
     except Exception as e:
