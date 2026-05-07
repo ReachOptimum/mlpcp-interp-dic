@@ -109,6 +109,10 @@ python src/random_script.py
 
 :pushpin: This convertion is necessary so shear strain results can be compared between each other, as MatchID uses tensorial convention and Abaqus uses engineering convention. So, values need to be multiplied by 2.
 
+### 4. Dataset interpolation using 30x30 grid and multiquadric method with [dic_mesh_interp.py](/src/dic_mesh_interp.py)
+
+### 5. XGBoost train and evaluation with [training.py](/src/training.py) and [testing.py](/src/testing.py), respectively
+
 ## :balance_scale: License
 
 This project is licensed under the MIT License, which allows anyone to use, modify, and distribute this software for free, as long as the original copyright and license notice are included. See the [LICENSE](LICENSE) file for more details.

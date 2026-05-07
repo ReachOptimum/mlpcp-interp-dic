@@ -6,19 +6,36 @@ import pandas as pd
 from typing import Tuple
 from numpy.typing import NDArray
 from scipy.interpolate import Rbf, RBFInterpolator
+from tqdm import tqdm
 
 # Variables
 DATA = r"data/cleaned"
 INT_P = r"data/processed/dic_subset_coords_cent.csv"
-X_TRAIN = os.path.join(DATA, "x_train_dic.csv")
-X_TEST = os.path.join(DATA, "x_test_dic.csv")
-METRICS = r"metrics/interpolation_metrics.csv"
+X_TRAIN = os.path.join(DATA, "x_train_dic_exy_x2.csv")
+X_TEST = os.path.join(DATA, "x_test_dic_exy_x2.csv")
+METRICS = r"metrics/dic_exy_x2_interpolation_metrics.csv"
 
 # setting global vars
-IN_FILES = [X_TEST]
+IN_FILES = [X_TRAIN, X_TEST]
 GRIDS = [30]
 METHODS = ["multiquadric"]
-BUFF_TSHOLD = 1
+BUFF_TSHOLD = 50
+
+def timer_tick(start_time):
+    # End the timer and calculate elapsed time
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+
+    # Convert elapsed time to minutes and seconds
+    elapsed_minutes = int(elapsed_time // 60)
+    elapsed_seconds = int(elapsed_time % 60)
+
+    # Print total elapsed time in "minutes:seconds" format
+    print("Finished in {}:{:02d} minutes.".format(elapsed_minutes, elapsed_seconds))
+
+def count_lines(path):
+    with open(path, "r", newline="") as f:
+        return sum(1 for _ in f)
 
 def mesh_gen(n_points: int) -> Tuple[NDArray[np.float64], NDArray[np.float64]]:
     """
@@ -90,6 +107,8 @@ def interpolator(infile: str, grid: int, method: str, x: NDArray[np.float64], y:
     points = np.column_stack((x, y))                 # shape (N, 2)
     grid_points = np.column_stack((grid_x, grid_y))  # shape (M, 2)
 
+    infile_len = count_lines(infile)
+
     # if grid_x == None:
     #     return None
 
@@ -101,8 +120,12 @@ def interpolator(infile: str, grid: int, method: str, x: NDArray[np.float64], y:
             # next(reader) # skips header
             bg_bf = []
             # for each simulation
-            for k, row in enumerate(reader, start=1):
-                print(f"Processing row {k}...")
+            for k, row in enumerate(tqdm(reader, total=infile_len, dynamic_ncols=True), start=1):
+                # if k > 1:
+                #     # gets out of the loop after first row (for testing purposes)
+                #     print("Getting out of loop after first row (testing)")
+                #     break
+                # print(f"Processing row {k}...")
                 # checks if number of elements matches with coordinates given
                 if (len(row)/20-2)/3 != len(x):
                     raise ValueError(f"Error: Number of elements in row {k} does not match number of coordinates ({len(x)}).")
@@ -110,7 +133,9 @@ def interpolator(infile: str, grid: int, method: str, x: NDArray[np.float64], y:
                 bf = []
                 # for each timestep
                 for j in range (0,20):
-                    print(f"  Timestep {j+1}/20")
+                    # start timer
+                    ts_start_time = time.time()
+                    # print(f"  Timestep {j+1}/20")
                     # initialize arrays
                     def_x = []
                     def_y = []
@@ -123,13 +148,13 @@ def interpolator(infile: str, grid: int, method: str, x: NDArray[np.float64], y:
                     y_force = row[c+1]
 
                     # for each element
-                    print("    Extracting element data...")
+                    # print("    Extracting element data...")
                     for i in range(c+2, c+2+len(x)*3, 3):
                         def_x.append(row[i])
                         def_y.append(row[i + 1])
                         def_xy.append(row[i + 2])
 
-                    print("    Converting lists to numpy arrays and stacking...")
+                    # print("    Converting lists to numpy arrays and stacking...")
                     def_x = np.array(def_x, dtype=float)
                     def_y = np.array(def_y, dtype=float)
                     def_xy = np.array(def_xy, dtype=float)
@@ -144,26 +169,27 @@ def interpolator(infile: str, grid: int, method: str, x: NDArray[np.float64], y:
                     # print("def_xy range:", def_xy.min(), def_xy.max())
                     # print("values.shape:", values.shape)
 
-                    print("    Creating RBF interpolator...")
-                    rbf = RBFInterpolator(points, values, kernel=method, epsilon=1)
+                    # print("    Creating RBF interpolator...")
+                    rbf = RBFInterpolator(points, values, neighbors=250, kernel=method, epsilon=10)
 
-                    print("    Interpolating on the grid...")
+                    # print("    Interpolating on the grid...")
                     grid_def = rbf(grid_points)
 
-                    print("    Removing NaN values and appending forces and strains...")
+                    # print("    Removing NaN values and appending forces and strains...")
                     grid_def = np.nan_to_num(grid_def)
                     bf.append(x_force)
                     bf.append(y_force)
                     bf.extend(grid_def.ravel())
 
                     # print("bf.shape:", np.array(bf).shape)
+                    # timer_tick(ts_start_time)
 
-                print("Appending data to buffer...")
+                # print("Appending data to buffer...")
                 # dump buffer to big buffer
                 bg_bf.append(bf)
 
                 if len(bg_bf) == BUFF_TSHOLD:
-                    print(f"Writing {len(bg_bf)} rows to {new_fname}...")
+                    # print(f"Writing {len(bg_bf)} rows to {new_fname}...")
                     write_header = not os.path.isfile(new_fname)
 
                     with open(new_fname, "a", newline="", encoding="utf-8") as f:
@@ -188,13 +214,8 @@ def interpolator(infile: str, grid: int, method: str, x: NDArray[np.float64], y:
     # end the timer and calculate elapsed time in minutes and seconds
     end_time = time.time()
     elapsed_time = end_time - start_time
-    elapsed_minutes = int(elapsed_time // 60)
-    elapsed_seconds = int(elapsed_time % 60)
 
-    # print total elapsed time in "minutes:seconds" format
-    print(
-        f"Finished processing {fname} in {elapsed_minutes}:{elapsed_seconds:02d} minutes."
-    )
+    timer_tick(start_time)
 
     return {
             "grid": grid,
