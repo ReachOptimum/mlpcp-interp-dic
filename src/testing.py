@@ -12,8 +12,8 @@ import joblib
 # Variables
 DATA = r"data/cleaned"
 MODELS = r"models"
-Y_TEST = os.path.join(DATA, "y_test.csv")
-METRICS = r"metrics/testing_performance_metrics.csv"
+Y_TEST = os.path.join(DATA, "y_test_dic.csv")
+METRICS = r"metrics/dic_exy_x2_testing_performance_metrics.csv"
 
 GRIDS = [30]
 METHODS = ["multiquadric"]
@@ -26,13 +26,13 @@ def test_and_evaluate(grid, method, test_method):
 
     # construct paths to the testing files
     x_test = os.path.join(
-        DATA, f"x_test_dic_{grid}_{test_method}.csv"
+        DATA, f"x_test_dic_exy_x2_{grid}_{test_method}.csv"
     )
     xgb_model = os.path.join(
-        MODELS, f"xgb_{grid}_{method}.joblib"
+        MODELS, f"xgb_dic_exy_x2_{grid}_{method}.joblib"
     )
     scaler_file = os.path.join(
-        MODELS, f"scaler_{grid}_{method}.joblib"
+        MODELS, f"scaler_dic_exy_x2_{grid}_{method}.joblib"
     )
 
     # load feature and target data
@@ -114,7 +114,7 @@ def test_and_evaluate(grid, method, test_method):
     print(f'MAPE on {test_method} test for {grid}_{method} model: {mape_test}')
 
     # saves predicted y data to csv file
-    pred_params_path = os.path.join(DATA, f"y_pred_{grid}_{method}_{test_method}.csv")
+    pred_params_path = os.path.join(DATA, f"y_pred_dic_exy_x2_{grid}_{method}_{test_method}.csv")
     df = pd.DataFrame(y_test_pred)
     df.to_csv(pred_params_path, mode="w", header=True, index=False)
 

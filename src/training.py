@@ -14,11 +14,11 @@ import os
 # Variables
 DATA = r"data/cleaned"
 MODELS = r"models"
-Y_TRAIN = os.path.join(DATA, "y_train.csv")
-METRICS = r"metrics/training_performance_metrics.csv"
+Y_TRAIN = os.path.join(DATA, "y_train_dic.csv")
+METRICS = r"metrics/dic_exy_x2_training_performance_metrics.csv"
 
-GRIDS = [20, 30, 40]
-METHODS = ["linear", "cubic", "multiquadric"]
+GRIDS = [30]
+METHODS = ["multiquadric"]
 
 # Function to train and evaluate model
 def train_and_evaluate(grid: int, method: str):
@@ -28,7 +28,7 @@ def train_and_evaluate(grid: int, method: str):
 
     # construct paths to the training files
     x_train = os.path.join(
-        DATA, f"x_train_{grid}_{method}.csv"
+        DATA, f"x_train_dic_exy_x2_{grid}_{method}.csv"
     )
 
     # load feature and target data
@@ -64,7 +64,7 @@ def train_and_evaluate(grid: int, method: str):
 
     # set path for scaler file
     scaler_file = os.path.join(
-        MODELS, f"scaler_{grid}_{method}.joblib"
+        MODELS, f"scaler_dic_exy_x2_{grid}_{method}.joblib"
     )
 
     # dump the scaler to a file
@@ -90,7 +90,7 @@ def train_and_evaluate(grid: int, method: str):
 
     # save the trained model
     model_filename = os.path.join(
-        MODELS, f"xgb_{grid}_{method}.joblib")
+        MODELS, f"xgb_dic_exy_x2_{grid}_{method}.joblib")
     try:
         joblib.dump(modelo, model_filename)
         print(f"Model saved as {model_filename}")
