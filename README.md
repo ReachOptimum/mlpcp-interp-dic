@@ -83,7 +83,7 @@ python cruciform-dic-matchid.py
 
 ### 3. Data processing
 
-#### 3.1. Compile each sample into 1 single file with [dic_csv_1st_compile.py](/tools/dic_csv_1st_compile.py)
+#### 3.1. Compile each sample into 1 single file with [dic_csv_pre_compile.py](/tools/dic_csv_pre_compile.py)
 
 :warning: Before running the script, you must copy all the 6755 raw samples from the previous study to the [data/raw/original_samples](/data/raw/original_samples/) folder, as this script will use them to get $F_{xx}$ and $F_{yy}$ force values.
 
@@ -91,13 +91,13 @@ python cruciform-dic-matchid.py
 
 From the home folder, run
 ```
-python tools/dic_csv_1st_compile.py
+python tools/dic_csv_pre_compile.py
 ```
 
-#### 3.2. Compile all samples into 1 single file with [dic_csv_2nd_compile.py](/tools/dic_csv_2nd_compile.py)
+#### 3.2. Compile all samples into 1 single file with [dic_csv_compile.py](/tools/dic_csv_compile.py)
 From the home folder, run
 ```
-python tools/dic_csv_2nd_compile.py
+python tools/dic_csv_compile.py
 ```
 
 ## :balance_scale: License
