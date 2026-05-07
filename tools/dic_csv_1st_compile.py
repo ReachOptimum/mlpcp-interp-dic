@@ -5,13 +5,13 @@ import telebot
 import configparser
 
 # Accessing variables
-# base_dir = os.getcwd()
-DIR = r"data/raw"
-TRAIN = os.path.join(DIR, "train")
-TEST = os.path.join(DIR, "test")
-OUTPUT = os.path.join(DIR, "compilation")
-ORIGINAL = os.path.join(DIR, "original_samples")
-REF_FILE = os.path.join(DIR, "Static_0000_0_Numerical_0_0.synthetic.tif.csv")
+DATA_RAW = r"data/raw"
+DATA_PROC = r"data/processed"
+TRAIN = r"matchid/train"
+TEST = r"matchid/test"
+OUTPUT = os.path.join(DATA_PROC, "pre_compilation")
+ORIGINAL = os.path.join(DATA_RAW, "original_samples")
+REF_FILE = os.path.join(DATA_RAW, "Static_0000_0_Numerical_0_0.synthetic.tif.csv")
 
 # ensure output directory exists
 os.makedirs(OUTPUT, exist_ok=True)

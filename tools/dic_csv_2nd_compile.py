@@ -1,25 +1,16 @@
-"""
-Tool to compile csv files.
-"""
-
 import glob
 import os
 import csv
 import pandas as pd
 import re
-# import time
 import logging
 import telebot
 import configparser
 
 # Accessing variables
-DIR = r"data/raw"
 DATA_PROC = r"data/processed"
-TRAIN = os.path.join(DIR, "compilation", "train")
-TEST = os.path.join(DIR, "compilation", "test")
-
-# ensure output directory exists
-os.makedirs(DATA_PROC, exist_ok=True)
+TRAIN = os.path.join(DATA_PROC, "pre_compilation", "train")
+TEST = os.path.join(DATA_PROC, "pre_compilation", "test")
 
 # buffer threshold for dumping intermediate files
 X_BUFF_TSHOLD = 100

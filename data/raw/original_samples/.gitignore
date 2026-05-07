@@ -1,5 +1,4 @@
 # Ignore everything in this directory
 *
-# Except this
+# Except this file
 !.gitignore
-!original_samples/
