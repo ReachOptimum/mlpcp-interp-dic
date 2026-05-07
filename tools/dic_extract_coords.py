@@ -1,10 +1,10 @@
 import os
 import csv
 
-DIR = r"data/raw"
-PROC_DIR = r"data/processed"
-ZERO_STEP = os.path.join(DIR, "Static_0000_0_Numerical_0_0.synthetic.tif.csv")
-COORD_OUTPUT = os.path.join(PROC_DIR, "dic_subset_coords.csv")
+DATA_RAW = r"data/raw"
+DATA_PROC = r"data/processed"
+ZERO_STEP = os.path.join(DATA_RAW, "Static_0000_0_Numerical_0_0.synthetic.tif.csv")
+COORD_OUTPUT = os.path.join(DATA_PROC, "dic_subset_coords.csv")
 
 coords = []
 

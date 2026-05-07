@@ -95,9 +95,31 @@ python tools/dic_csv_pre_compile.py
 ```
 
 #### 3.2. Compile all samples into 1 single file with [dic_csv_compile.py](/tools/dic_csv_compile.py)
+
 From the home folder, run
 ```
 python tools/dic_csv_compile.py
+```
+
+#### 3.3. Dataset sort according to original cruciform dataset with [dic_dataset_sort.py](/tools/dic_dataset_sort.py)
+
+From the home folder, run
+```
+python tools/dic_dataset_sort.py
+```
+
+#### 3.4. Extract DIC subset coordinates from static file with [dic_extract_coords.py](/tools/dic_extract_coords.py)
+
+From the home folder, run
+```
+python tools/dic_extract_coords.py
+```
+
+#### 3.5. Shift subset coordinates to cruciform domain with [dic_subset_shift.py](/tools/dic_subset_shift.py)
+
+From the home folder, run
+```
+python tools/dic_subset_shift.py
 ```
 
 ## :balance_scale: License

@@ -2,9 +2,9 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
-PROC_DIR = r"data/processed"
-COORDS = os.path.join(PROC_DIR, "dic_subset_coords.csv")
-COORDS_CENTERED = os.path.join(PROC_DIR, "dic_subset_coords_cent.csv")
+DATA_PROC = r"data/processed"
+COORDS = os.path.join(DATA_PROC, "dic_subset_coords.csv")
+COORDS_CENTERED = os.path.join(DATA_PROC, "dic_subset_coords_cent.csv")
 
 # load data
 df = pd.read_csv(COORDS, header=None)
