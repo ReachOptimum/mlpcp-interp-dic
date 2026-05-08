@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite this paper."
+title: "mlpcp-interp-dic"
+type: software
+authors:
+  - family-names: "Mitreiro"
+    given-names: "Dário"
+  - family-names: "Henriques"
+    given-names: "João"
+  - family-names: "Prates"
+    given-names: "Pedro A."
+  - family-names: "Andrade-Campos"
+    given-names: "António"
+license: MIT
+
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Mitreiro"
+      given-names: "Dário"
+    - family-names: "Henriques"
+      given-names: "João"
+    - family-names: "Prates"
+      given-names: "Pedro A."
+    - family-names: "Andrade-Campos"
+      given-names: "António"
+  title: "Towards DIC-Subset-Independent Machine Learning Models for Constitutive Parameter Identification in Sheet Metal Forming"
+  journal: "Key Engineering Materials"
+  volume: 1049
+  start: 115
+  end: 122
+  year: 2026
+  doi: "10.4028/p-hcCP0o"
