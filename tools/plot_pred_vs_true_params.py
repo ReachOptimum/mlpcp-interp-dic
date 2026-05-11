@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import r2_score
 
 # Folder paths
-PLOT = r"res"
+PLOT = r"images"
 DATA = r"data/cleaned"
 Y_TEST = r"data/cleaned/y_test.csv"
 

@@ -97,7 +97,7 @@ python cruciform-dic-matchid.py
 
 ### 3. Data processing
 
-:pushpin: Note that, from now on, scripts are **always** executed from the [home](/) folder, so defined paths inside scripts work as expected.
+:pushpin: From now on, scripts must be **always** executed from the [home](/) folder, so defined paths inside scripts work as expected.
 
 As an example, let's say we want to execute some ```random_script.py``` inside [src](/src/) folder. Then, from the [home](/) folder, we run
 

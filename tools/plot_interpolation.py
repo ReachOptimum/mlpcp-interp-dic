@@ -8,7 +8,7 @@ DATA = r"data/cleaned"
 INT_P = r"data/processed/dic_subset_coords_cent.csv"
 X_TRAIN = r"data/cleaned/x_test_dic_exy_x2.csv"
 DIC_INTERP = os.path.join(DATA, f"x_test_dic_exy_x2_30_multiquadric.csv")
-PLOT = r"res"
+PLOT = r"images"
 
 GRIDS = [30]
 METHODS = ["multiquadric"]
