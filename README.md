@@ -2,7 +2,7 @@
 
 **Machine Learning** for **Prediction** of **Constitutive Parameters** - **Interpolation** study with **DIC** application.
 
-This work is forked from [mlpcp-interp-num](https://github.com/dmitreiro/mlpcp-interp-num). The previous study was performed on numerical data. For this work, DIC-levelled data is used to confirm the practical applicability of the proposed interpolation approach.
+This work is forked from [mlpcp-interp-num](https://github.com/ReachOptimum/mlpcp-interp-num). The previous study was performed on numerical data. For this work, DIC-levelled data is used to confirm the practical applicability of the proposed interpolation approach.
 
 ## :page_facing_up: Reference
 
